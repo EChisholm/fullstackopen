@@ -1,0 +1,8 @@
+title  0.6 Single Page App New Note Creation
+
+browser-> server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+server --> browser: 201 Created
+
+note over browser:
+browser executes event handler, adding the new note and rerenders the page
+end note
