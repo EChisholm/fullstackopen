@@ -16,8 +16,8 @@ const App = (props) => {
     const [mostVoted,setMostVoted] = useState(0)
 
     const getRandomInt = (min,max) => {
-        min = Math.ceil(min);
-        max = Math.floor(max);
+        min = Math.ceil(min)
+        max = Math.floor(max)
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
