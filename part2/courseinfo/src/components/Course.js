@@ -10,7 +10,7 @@ const Header = ( {course} ) => {
     return(
         <>
         {parts.map((part) =>
-            <Part key={part.exercises} part={part} />
+            <Part key={part.id} part={part} />
         )}
         </>
     )
