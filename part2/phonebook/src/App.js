@@ -25,18 +25,22 @@ const App = () => {
     const nameObject = {name: newName}
     setPersons(persons.concat(nameObject))
     setNewName('')
+    
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addPerson}>
+      <form onSubmit={ persons.map((person) => person.name).includes(newName) ? 
+                      window.alert(`${newName} is already in the phonebook`)
+                      : addPerson
+    }>
         <div>
           name: 
           <input value={newName} onChange={handleNameChange}/>
         </div>
         <div>
-          <button type="submit">add</button>
+          <button type="submit" >add</button>
         </div>
       </form>
       <h2>Numbers</h2>
