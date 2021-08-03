@@ -23,18 +23,18 @@ const App = () => {
     event.preventDefault()
     console.log('button clicked', event.target)
     const nameObject = {name: newName}
-    setPersons(persons.concat(nameObject))
+    persons.some((person) => (person.name) === newName) 
+      ? window.alert(`${newName} is already in the address book. Please enter a different name`)
+      : setPersons(persons.concat(nameObject))
     setNewName('')
     
   }
 
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={ persons.map((person) => person.name).includes(newName) ? 
-                      window.alert(`${newName} is already in the phonebook`)
-                      : addPerson
-    }>
+      <form onSubmit={addPerson}>
         <div>
           name: 
           <input value={newName} onChange={handleNameChange}/>
