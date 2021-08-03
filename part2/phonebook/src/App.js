@@ -1,10 +1,6 @@
 import React, { useState } from 'react'
+import Persons from './components/Persons'
 
-const Person = ({person}) => {
-  return(
-    <p>{person.name} {person.number} </p>
-  )
-}
 
 
 
@@ -33,6 +29,7 @@ const App = () => {
 
   const peopleToShow = persons.filter(person => person.name.toLowerCase().includes(nameFilter.toLowerCase()))
 
+  
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -69,11 +66,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <div>
-        {peopleToShow.map(person =>
-            <Person key={person.name} person={person} />
-        )}
-      </div>
+        <Persons peopleToShow={peopleToShow} />
     </div>
   )
 }
