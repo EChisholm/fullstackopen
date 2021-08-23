@@ -1,5 +1,3 @@
-import react from 'react'
-
 const Filter = ({nameFilter, filterHandler}) => {
     return(
         <div>
