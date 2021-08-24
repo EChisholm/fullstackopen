@@ -21,7 +21,7 @@ const App = () => {
     .get('https://restcountries.eu/rest/v2/all')
     .then(response => {setCountries(response.data)})
   }, [])
-  console.log('render', countries.length, 'countries');
+  //console.log('render', countries.length, 'countries');
   console.log('To show', countriesToShow)
  
   return(
@@ -29,7 +29,7 @@ const App = () => {
       <CountryFilter country={countryFilter} countryHandler={handleCountryFilter}></CountryFilter>
       <div>{ (countriesToShow.length > 10 || countriesToShow.length < 1) ? "Too many matches,specify another filter": 
               (countriesToShow.length > 1) ? <CountryList countriesToShow={countriesToShow}></CountryList> :
-              <Country country={countriesToShow}> </Country>
+              <Country country={countriesToShow.pop()}> </Country>
               
       }</div>
     </div>

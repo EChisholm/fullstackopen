@@ -4,7 +4,7 @@ const CountryList = ({countriesToShow}) => {
         return(
         <div>
             {countriesToShow.map(country =>
-                <p> {country.name} </p>
+                <p key={country.name}> {country.name} </p>
             )}
           </div>
         )
