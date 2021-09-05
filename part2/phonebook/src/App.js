@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
+import personService from './services/persons'
 
 const App = () => {
   
@@ -13,11 +13,10 @@ const App = () => {
 
   useEffect( () => {
     console.log('effect')
-    axios
-    .get('http://localhost:3001/persons')
-    .then(response => {
-      console.log('promise fulfilled')
-      setPersons(response.data)
+    personService
+    .getAll()
+    .then(initialData => {
+      setPersons(initialData)
       })
     }, [])
   console.log('render', persons.length, 'persons')
@@ -26,7 +25,7 @@ const App = () => {
     setNameFilter(event.target.value)
   }
   const handleNameChange = (event) => {
-    //console.log(event.target.value)
+    console.log(event.target.value)
     setNewName(event.target.value)
   }
 
@@ -42,10 +41,10 @@ const App = () => {
     const nameObject = {name: newName, number: newNumber}
     persons.some((person) => (person.name) === newName || (person.number) === newNumber) 
       ? window.alert(`${newName} is already in the address book. Please enter a different name`)
-      : axios
-        .post('http://localhost:3001/persons',nameObject)
-        .then( (response) => {
-          setPersons(persons.concat(response.data))
+      : personService
+        .create(nameObject)
+        .then( (newPerson) => {
+          setPersons(persons.concat(newPerson))
           setNewName('')
           setNewNumber('')
         })
