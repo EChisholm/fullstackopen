@@ -42,9 +42,15 @@ const App = () => {
     const nameObject = {name: newName, number: newNumber}
     persons.some((person) => (person.name) === newName || (person.number) === newNumber) 
       ? window.alert(`${newName} is already in the address book. Please enter a different name`)
-      : setPersons(persons.concat(nameObject))
-    setNewName('')
-    setNewNumber('')
+      : axios
+        .post('http://localhost:3001/persons',nameObject)
+        .then( (response) => {
+          setPersons(persons.concat(response.data))
+          setNewName('')
+          setNewNumber('')
+        })
+      
+      
     
   }
 
