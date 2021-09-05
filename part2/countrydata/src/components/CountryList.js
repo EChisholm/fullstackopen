@@ -1,10 +1,11 @@
-import React from "react"
+import Country from "./Country"
 
-const CountryList = ({countriesToShow}) => {
+const CountryList = ({countriesToShow},{showCountry}) => {
+
         return(
         <div>
             {countriesToShow.map(country =>
-                <p key={country.name}> {country.name} </p>
+                <Country country={country} key={country.name} ></Country>
             )}
           </div>
         )
