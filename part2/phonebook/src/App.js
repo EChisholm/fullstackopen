@@ -25,7 +25,7 @@ const App = () => {
     setNameFilter(event.target.value)
   }
   const handleNameChange = (event) => {
-    console.log(event.target.value)
+    //console.log(event.target.value)
     setNewName(event.target.value)
   }
 
@@ -48,11 +48,21 @@ const App = () => {
           setNewName('')
           setNewNumber('')
         })
-      
-      
-    
   }
 
+  const removePerson = (event) => {
+    event.preventDefault()
+    console.log('button clicked', event.target)
+    const personToDelete = persons.find( p => p.id === parseInt(event.target.value))
+    if (window.confirm(`Do you really want to delete ${personToDelete.name}?`)) {
+      personService
+        .remove(personToDelete.id)
+        .then( (deletedPerson) => {
+                setPersons(persons.filter(person => person.id !== personToDelete.id))
+        })}
+
+    
+  }
 
   return (
     <div>
@@ -67,7 +77,7 @@ const App = () => {
           numberHandler={handleNumberChange}
         />
       <h2>Numbers</h2>
-        <Persons peopleToShow={peopleToShow} />
+        <Persons peopleToShow={peopleToShow} deleteHandler={removePerson} />
     </div>
   )
 }
