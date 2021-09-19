@@ -3,6 +3,7 @@ import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import personService from './services/persons'
+import personsService from './services/persons'
 
 const App = () => {
   
@@ -39,15 +40,27 @@ const App = () => {
     event.preventDefault()
     console.log('button clicked', event.target)
     const nameObject = {name: newName, number: newNumber}
-    persons.some((person) => (person.name) === newName || (person.number) === newNumber) 
-      ? window.alert(`${newName} is already in the address book. Please enter a different name`)
-      : personService
+    if (persons.some((person) => (person.name) === newName)) {
+      const personToEdit = persons.find((person) => (person.name) === newName)
+      console.log(personToEdit)
+      if (window.confirm(`${newName} is already in the address book. Replace the old number with a new one?`)){
+        personService
+        .put(personToEdit.id,nameObject)
+        .then( (editedPerson) => {
+          setPersons(persons.map((p) => (p.id === editedPerson.id ? editedPerson : p)))
+          setNewName('')
+          setNewNumber('')
+        })
+      }
+    }
+    else { personService
         .create(nameObject)
         .then( (newPerson) => {
           setPersons(persons.concat(newPerson))
           setNewName('')
           setNewNumber('')
         })
+      }
   }
 
   const removePerson = (event) => {
