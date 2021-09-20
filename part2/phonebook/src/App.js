@@ -12,7 +12,9 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber] = useState('')
   const [ nameFilter, setNameFilter] = useState('')
-  const [ errorMessage,  setErrorMessage] = useState(null)
+  const [ message,  setMessage] = useState(null)
+  const [ httpSuccess, setHttpSuccess] = useState(false)
+
 
   useEffect( () => {
     console.log('effect')
@@ -52,10 +54,21 @@ const App = () => {
           setPersons(persons.map((p) => (p.id === editedPerson.id ? editedPerson : p)))
           setNewName('')
           setNewNumber('')
-          setErrorMessage(`${editedPerson.name}'s information has been updated!`)
+          setHttpSuccess(true)
+          setMessage(`${editedPerson.name}'s information has been updated!`)
           setTimeout(() => {
-            setErrorMessage(null)
+            setMessage(null)
           }, 5000)
+        })
+        .catch(error => {
+          setHttpSuccess(false)
+          setMessage(`Information of ${newName} has already been removed from the server.`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 10000)
+          setPersons(persons.filter(person => person.id !== personToEdit.id))
+          setNewName('')
+          setNewNumber('')
         })
       }
     }
@@ -65,9 +78,10 @@ const App = () => {
           setPersons(persons.concat(newPerson))
           setNewName('')
           setNewNumber('')
-          setErrorMessage(`${newPerson.name} has been added!`)
+          setHttpSuccess(true)
+          setMessage(`${newPerson.name} has been added!`)
           setTimeout(() => {
-            setErrorMessage(null)
+            setMessage(null)
           }, 5000)
         })
       }
@@ -90,7 +104,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={errorMessage} />
+      <Notification message={message} messageType={httpSuccess} />
         <Filter nameFilter={nameFilter} filterHandler={handleFilterChange}/>
       <h3>Add a new person</h3>
         <PersonForm 
