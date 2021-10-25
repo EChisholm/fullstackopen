@@ -6,6 +6,6 @@ POST http://localhost:3001/api/persons HTTP/1.1
 Content-Type: application/json
 
 {
-    "content": "Postman is a good tool for testing REST apis",
-    "important": true
+    "name": "Evan Chisholm",
+    "number": "123-456-789"
  }
